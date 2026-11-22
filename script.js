@@ -61,6 +61,7 @@ const defaultState = () => ({
   focusSessions: [],       // { date: 'YYYY-MM-DD', minutes, taskId }
   streak: { current: 0, longest: 0, lastDay: null, days: [] },
   settings: { sound: true, name: "Survivor" },
+  howtoSeen: false,
   seeded: false,
 });
 
@@ -82,6 +83,7 @@ function loadState() {
       focusSessions: Array.isArray(parsed.focusSessions) ? parsed.focusSessions : [],
       streak: { ...base.streak, ...(parsed.streak || {}) },
       settings: { ...base.settings, ...(parsed.settings || {}) },
+      howtoSeen: parsed.howtoSeen === true,
     };
   } catch {
     console.warn("Saved data was corrupted — starting fresh.");
@@ -1158,6 +1160,7 @@ $("#resetAll").addEventListener("click", () => {
   seedSampleData();
   saveState();
   renderAll();
+  renderDashboard();
   toast("danger", "Application reset", "Sample missions restored. Fresh start.");
 });
 
@@ -1184,6 +1187,20 @@ document.addEventListener("click", (e) => {
     $("#notifPanel").hidden = true;
   }
 });
+
+/* ------------------------------------------------------------
+   How-it-works popup (first launch only, reopenable in Settings)
+------------------------------------------------------------ */
+function showHowto() { openModal("howtoModal"); }
+
+function dismissHowto() {
+  state.howtoSeen = true;
+  saveState();
+  closeModal("howtoModal");
+}
+
+$("#howtoGotIt").addEventListener("click", dismissHowto);
+$("#openHowto").addEventListener("click", showHowto);
 
 /* ------------------------------------------------------------
    Sample data
@@ -1239,6 +1256,7 @@ function init() {
     .join("");
 
   renderAll();
+  if (!state.howtoSeen) showHowto();
 
   // Keep countdowns and panic level honest as time passes.
   setInterval(() => {

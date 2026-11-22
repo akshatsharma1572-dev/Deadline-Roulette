@@ -73,6 +73,7 @@
               <span class="stat-label">Survival Score</span>
               <span class="stat-ico ico--green"><i data-lucide="shield-check"></i></span>
             </div>
+            <p class="stat-sub">How on track you are, based on done vs. overdue work</p>
             <div class="stat-value"><span id="survivalScore">0</span><small>/ 100</small></div>
             <div class="bar bar--green"><div class="bar__fill" id="survivalBar" style="width:0%"></div></div>
             <p class="stat-foot" id="survivalFoot">Awaiting intel…</p>
@@ -111,6 +112,7 @@
               <h2><i data-lucide="activity"></i> Panic Meter</h2>
               <span class="status-chip" id="panicStatusBig">Chill Zone</span>
             </div>
+            <p class="card-sub">How much deadline pressure you're under right now</p>
             <div class="gauge">
               <svg viewBox="0 0 200 120" class="gauge__svg" aria-hidden="true">
                 <path class="gauge__track" d="M20 110 A 80 80 0 0 1 180 110" />
@@ -134,8 +136,8 @@
           <h2 class="section-title"><i data-lucide="zap"></i> Quick Actions</h2>
           <div class="qa-grid">
             <button class="qa-card qa--purple" id="qaAdd"><i data-lucide="plus-circle"></i><strong>Add Mission</strong><span>Create a new task</span></button>
-            <button class="qa-card qa--orange" id="qaRoulette"><i data-lucide="loader-pinwheel"></i><strong>Spin Deadline Roulette</strong><span>Let fate pick your next mission</span></button>
-            <button class="qa-card qa--red" id="qaSaveNight"><i data-lucide="moon-star"></i><strong>Save My Night</strong><span>Generate an emergency plan</span></button>
+            <button class="qa-card qa--orange" id="qaRoulette"><i data-lucide="loader-pinwheel"></i><strong>Spin Deadline Roulette</strong><span>Can't decide? Let the app pick your next task</span></button>
+            <button class="qa-card qa--red" id="qaSaveNight"><i data-lucide="moon-star"></i><strong>Save My Night</strong><span>Builds a step-by-step plan for tonight</span></button>
             <button class="qa-card qa--green" id="qaFocus"><i data-lucide="timer"></i><strong>Start Focus Session</strong><span>25 minutes of deep work</span></button>
           </div>
         </section>
@@ -146,6 +148,7 @@
         <header class="page-head">
           <div>
             <h1>Mission Control</h1>
+            <p class="page-sub">All your tasks in one place</p>
             <p class="topbar__sub" id="missionSummary">0 pending · 0 completed</p>
           </div>
           <button class="btn btn--primary" id="addMissionBtn"><i data-lucide="plus"></i> Add Mission</button>
@@ -175,8 +178,8 @@
         <div class="task-grid" id="taskGrid"></div>
         <div class="empty-state" id="tasksEmpty" hidden>
           <i data-lucide="radar"></i>
-          <h3>No missions found</h3>
-          <p>Nothing matches the current filters. Add a mission or adjust your search.</p>
+          <h3>Nothing here yet</h3>
+          <p>Add a mission to get started, or try a different search.</p>
           <button class="btn btn--primary" id="emptyAddBtn"><i data-lucide="plus"></i> Add your first mission</button>
         </div>
       </section>
@@ -186,7 +189,7 @@
         <header class="page-head">
           <div>
             <h1>Focus Mode</h1>
-            <p class="topbar__sub">Deep-work sprints that count toward your survival.</p>
+            <p class="topbar__sub">A timer to help you study without distractions.</p>
           </div>
         </header>
 
@@ -250,7 +253,7 @@
         <header class="page-head">
           <div>
             <h1>Statistics</h1>
-            <p class="topbar__sub">Everything below is generated from your real data.</p>
+            <p class="topbar__sub">These numbers update as you use the app.</p>
           </div>
         </header>
 
@@ -288,7 +291,7 @@
         <header class="page-head">
           <div>
             <h1>Settings</h1>
-            <p class="topbar__sub">Tune the survival system to your taste.</p>
+            <p class="topbar__sub">Make the app yours.</p>
           </div>
         </header>
         <div class="settings-layout">
@@ -306,6 +309,11 @@
               <span>Sound effects (roulette, level-ups, timer)</span>
               <span class="toggle"><input type="checkbox" id="soundToggle" checked /><em></em></span>
             </label>
+          </article>
+          <article class="card">
+            <div class="card-head"><h2><i data-lucide="help-circle"></i> Guide</h2></div>
+            <p class="card-sub" style="margin-bottom:12px">New here? Take the 30-second tour.</p>
+            <button class="btn btn--ghost btn--sm" id="openHowto"><i data-lucide="book-open"></i> How it works</button>
           </article>
           <article class="card card--danger">
             <div class="card-head"><h2><i data-lucide="alert-triangle"></i> Danger Zone</h2></div>
@@ -406,6 +414,24 @@
         <footer class="modal__foot">
           <button class="btn btn--ghost" data-close="planModal">Close</button>
           <button class="btn btn--primary" id="startPlan"><i data-lucide="play"></i> Start Plan</button>
+        </footer>
+      </div>
+    </div>
+
+    <div class="modal" id="howtoModal" hidden>
+      <div class="modal__panel modal__panel--howto">
+        <header class="modal__head">
+          <h2><i data-lucide="compass"></i> How it works</h2>
+          <button class="icon-btn" data-close="howtoModal" aria-label="Close"><i data-lucide="x"></i></button>
+        </header>
+        <ol class="howto-list">
+          <li><span class="howto-num"><i data-lucide="plus-circle"></i></span><div><strong>Add your tasks as missions</strong><span>Name, subject and deadline — that's it.</span></div></li>
+          <li><span class="howto-num"><i data-lucide="sparkles"></i></span><div><strong>Complete missions to earn XP and level up</strong><span>Finish early for bonus XP.</span></div></li>
+          <li><span class="howto-num"><i data-lucide="loader-pinwheel"></i></span><div><strong>Stuck? Spin the roulette or use Save My Night</strong><span>The app picks a task or builds a plan for tonight.</span></div></li>
+          <li><span class="howto-num"><i data-lucide="flame"></i></span><div><strong>Keep your streak alive</strong><span>Finish at least one mission a day.</span></div></li>
+        </ol>
+        <footer class="modal__foot">
+          <button class="btn btn--primary" id="howtoGotIt"><i data-lucide="check"></i> Got it</button>
         </footer>
       </div>
     </div>
